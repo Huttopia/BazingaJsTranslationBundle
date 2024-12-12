@@ -34,7 +34,7 @@ class AppKernel extends Kernel
         parent::__construct($environment, $debug);
     }
 
-    public function registerBundles()
+    public function registerBundles(): iterable
     {
         return array(
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
@@ -44,39 +44,31 @@ class AppKernel extends Kernel
         );
     }
 
-    public function getRootDir()
+    public function getRootDir(): string
     {
         return __DIR__;
     }
 
-    public function getProjectDir()
+    public function getProjectDir(): string
     {
         return __DIR__.'/../';
     }
 
-    public function getCacheDir()
+    public function getCacheDir(): string
     {
         return sys_get_temp_dir().'/'.Kernel::VERSION.'/bazinga-js-translation/cache/'.$this->environment;
     }
 
-    public function getLogDir()
+    public function getLogDir(): string
     {
         return sys_get_temp_dir().'/'.Kernel::VERSION.'/bazinga-js-translation/logs';
     }
 
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         $loader->load(__DIR__.'/config/'.$this->environment.'.yml');
-        
-        if (self::VERSION_ID >= 40400) {
-            $loader->load(__DIR__.'/config/base_config_44.yml');
-        } else {
-            $loader->load(__DIR__.'/config/base_config.yml');
-        }
-        
-        if (self::VERSION_ID > 30200) {
-            $loader->load(__DIR__.'/config/disable_annotations.yml');
-        }
+        $loader->load(__DIR__.'/config/base_config.yml');
+        $loader->load(__DIR__.'/config/disable_annotations.yml');
 
         if (self::VERSION_ID < 40200 && file_exists(__DIR__.'/Resources/translations') === false) {
             self::recurseCopy(__DIR__.'/../translations', __DIR__.'/Resources/translations');

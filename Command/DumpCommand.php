@@ -12,6 +12,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @author Adrien Russo <adrien.russo.qc@gmail.com>
  * @author Hugo Monteiro <hugo.monteiro@gmail.com>
+ *
+ * @final
  */
 class DumpCommand extends Command
 {
@@ -23,7 +25,7 @@ class DumpCommand extends Command
     /**
      * @var string
      */
-    private $kernelRootDir;
+    private $projectDir;
 
     /**
      * @var string
@@ -32,20 +34,17 @@ class DumpCommand extends Command
 
     /**
      * @param TranslationDumper $dumper
-     * @param $kernelRootDir
+     * @param string $projectDir
      */
     public function __construct(TranslationDumper $dumper, $projectDir)
     {
         $this->dumper = $dumper;
-        $this->kernelRootDir = $projectDir . '/app';
+        $this->projectDir = $projectDir;
 
         parent::__construct();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('bazinga:js-translation:dump')
@@ -79,20 +78,14 @@ class DumpCommand extends Command
             );
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         parent::initialize($input, $output);
 
-        $this->targetPath = $input->getArgument('target') ?: sprintf('%s/../web/js', $this->kernelRootDir);
+        $this->targetPath = $input->getArgument('target') ?: sprintf('%s/web/js', $this->projectDir);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $formats = $input->getOption('format');
         $merge = (object) array(
@@ -112,7 +105,7 @@ class DumpCommand extends Command
         ));
 
         $this->dumper->dump($this->targetPath, $input->getOption('pattern'), $formats, $merge);
-        
+
         return 0;
     }
 }
