@@ -13,7 +13,7 @@
         define(['intl-messageformat'], factory);
     }
     else {
-        root.Translator = factory(root.IntlMessageFormat);
+        root.HuttoTranslate = factory(root.IntlMessageFormat);
     }
 }(typeof self !== 'undefined' ? self : this, function (IntlMessageFormat) {
     "use strict";
@@ -26,7 +26,7 @@
         _iPluralRegex = new RegExp(/^\s*(\{\s*(\-?\d+[\s*,\s*\-?\d+]*)\s*\})|([\[\]])\s*(-Inf|\-?\d+)\s*,\s*(\+?Inf|\-?\d+)\s*([\[\]])/),
         INTL_DOMAIN_SUFFIX = '+intl-icu';
 
-    var Translator = {
+    var HuttoTranslate = {
         /**
          * The current locale.
          *
@@ -82,7 +82,7 @@
          * @param {String} message    The message to register for the given id
          * @param {String} [domain]   The domain for the message or null to use the default
          * @param {String} [locale]   The locale or null to use the default
-         * @return {Object}           Translator
+         * @return {Object}           HuttoTranslate
          * @api public
          */
         add: function(id, message, domain, locale) {
@@ -183,7 +183,7 @@
          * Loads translations from JSON.
          *
          * @param {String} data     A JSON string or object literal
-         * @return {Object}         Translator
+         * @return {Object}         HuttoTranslate
          * @api public
          */
         fromJSON: function(data) {
@@ -238,8 +238,8 @@
      */
     function replace_placeholders(message, placeholders) {
         var _i,
-            _prefix = Translator.placeHolderPrefix,
-            _suffix = Translator.placeHolderSuffix;
+            _prefix = HuttoTranslate.placeHolderPrefix,
+            _suffix = HuttoTranslate.placeHolderSuffix;
 
         for (_i in placeholders) {
             var _r = new RegExp(_prefix + _i + _suffix, 'g');
@@ -391,7 +391,7 @@
             _e,
             _explicitRules = [],
             _standardRules = [],
-            _parts         = message.split(Translator.pluralSeparator),
+            _parts         = message.split(HuttoTranslate.pluralSeparator),
             _matches       = [];
 
         for (_p = 0; _p < _parts.length; _p++) {
@@ -640,5 +640,5 @@
         }
     }
 
-    return Translator;
+    return HuttoTranslate;
 }));

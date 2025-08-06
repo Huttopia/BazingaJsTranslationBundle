@@ -70,7 +70,7 @@ Install the package:
     npm install bazinga-translator --save
 
 This step is optional because the files exposed by the npm package are also part of the composer bundle.
-Normally you would do this if you prefer to keep all your front-end dependencies in one place, or if you wish to include the `Translator` object as a module dependency in your JS files.
+Normally you would do this if you prefer to keep all your front-end dependencies in one place, or if you wish to include the `HuttoTranslate` object as a module dependency in your JS files.
 
 **Important**: it is strongly recommended that you use the same version of the composer bundle and the npm package.
 
@@ -78,7 +78,7 @@ Normally you would do this if you prefer to keep all your front-end dependencies
 Usage
 -----
 
-To use the `Translator` object in your JS files you can either load it globally or `require` / `import` it as a module.
+To use the `HuttoTranslate` object in your JS files you can either load it globally or `require` / `import` it as a module.
 
 * To load it globally add the following line to your template:
 
@@ -90,12 +90,12 @@ To use the `Translator` object in your JS files you can either load it globally 
 
 ``` js
 // ES2015
-import Translator from 'bazinga-translator';
+import HuttoTranslate from 'bazinga-translator';
 ```
 
 ``` js
 // ES5
-var Translator = require('bazinga-translator');
+var HuttoTranslate = require('bazinga-translator');
 ```
 
 Then add the current application's locale into your layout, by adding a `lang`
@@ -134,10 +134,10 @@ other renderer (like `Twig` or `php`) to make translations accessible
  * @param {String} message    The message to register for the given id
  * @param {String} [domain]   The domain for the message or null to use the default
  * @param {String} [locale]   The locale or null to use the default
- * @return {Object}           Translator
+ * @return {Object}           HuttoTranslate
  * @api public
  */
-Translator.add(
+HuttoTranslate.add(
     'translation_key',
     '{{ 'translation_key'|trans }}',
     'messages',
@@ -190,7 +190,7 @@ URLs to also contain the `'_format': 'json'` parameter like so:
 {{ url('bazinga_jstranslation_js', { '_format': 'json' }) }}
 ```
 
-Then, feed the translator via `Translator.fromJSON(myRetrievedJSONString)`.
+Then, feed the translator via `HuttoTranslate.fromJSON(myRetrievedJSONString)`.
 
 ### The `dump` Command
 
@@ -238,15 +238,15 @@ a translation changes because the Assetic links will point to a static file.
 
 ### The JS Translator
 
-The `Translator` object implements the Symfony2
+The `HuttoTranslate` object implements the Symfony2
 [`TranslatorInterface`](https://github.com/symfony/symfony/blob/7.0/src/Symfony/Contracts/Translation/TranslatorInterface.php)
 and provides the same `trans()` and `transChoice()` methods:
 
 ``` javascript
-Translator.trans('key', {}, 'DOMAIN_NAME');
+HuttoTranslate.trans('key', {}, 'DOMAIN_NAME');
 // the translated message or undefined
 
-Translator.transChoice('key', 1, {}, 'DOMAIN_NAME');
+HuttoTranslate.transChoice('key', 1, {}, 'DOMAIN_NAME');
 // the translated message or undefined
 ```
 
@@ -257,7 +257,7 @@ Translator.transChoice('key', 1, {}, 'DOMAIN_NAME');
 The `trans()` method accepts a second argument that takes an array of parameters:
 
 ``` javascript
-Translator.trans('key', { "foo" : "bar" }, 'DOMAIN_NAME');
+HuttoTranslate.trans('key', { "foo" : "bar" }, 'DOMAIN_NAME');
 // will replace each "%foo%" in the message by "bar".
 ```
 
@@ -267,7 +267,7 @@ and `placeHolderPrefix` attributes.
 The `transChoice()` method accepts this array of parameters as third argument:
 
 ``` javascript
-Translator.transChoice('key', 123, { "foo" : "bar" }, 'DOMAIN_NAME');
+HuttoTranslate.transChoice('key', 123, { "foo" : "bar" }, 'DOMAIN_NAME');
 // will replace each "%foo%" in the message by "bar".
 ```
 
@@ -286,27 +286,27 @@ apples: "{0} There is no apples|{1} There is one apple|]1,19] There are %count% 
 ```
 
 ``` javascript
-Translator.locale = 'en';
+HuttoTranslate.locale = 'en';
 
-Translator.transChoice('apples', 0, {"count" : 0});
+HuttoTranslate.transChoice('apples', 0, {"count" : 0});
 // will return "There is no apples"
 
-Translator.transChoice('apples', 1, {"count" : 1});
+HuttoTranslate.transChoice('apples', 1, {"count" : 1});
 // will return "There is one apple"
 
-Translator.transChoice('apples', 2, {"count" : 2});
+HuttoTranslate.transChoice('apples', 2, {"count" : 2});
 // will return "There are 2 apples"
 
-Translator.transChoice('apples', 10, {"count" : 10});
+HuttoTranslate.transChoice('apples', 10, {"count" : 10});
 // will return "There are 10 apples"
 
-Translator.transChoice('apples', 19, {"count" : 19});
+HuttoTranslate.transChoice('apples', 19, {"count" : 19});
 // will return "There are 19 apples"
 
-Translator.transChoice('apples', 20, {"count" : 20});
+HuttoTranslate.transChoice('apples', 20, {"count" : 20});
 // will return "There are many apples"
 
-Translator.transChoice('apples', 100, {"count" : 100});
+HuttoTranslate.transChoice('apples', 100, {"count" : 100});
 // will return "There are many apples"
 ```
 
@@ -347,18 +347,18 @@ name_has_x_projects: {name} has {projectCount, plural, =0 {no projects} one {# p
 
 Then you can use the Translator like this:
 ```javascript
-Translator.trans('hello_name', { name: 'John' }, 'messages');
+HuttoTranslate.trans('hello_name', { name: 'John' }, 'messages');
 // will return "Hello John!"
 
 
-// equivalent to Translator.transChoice() with the "classic" translations format
-Translator.trans('name_has_x_projects', { name: 'John', projectCount: 0 }, 'messages');
+// equivalent to HuttoTranslate.transChoice() with the "classic" translations format
+HuttoTranslate.trans('name_has_x_projects', { name: 'John', projectCount: 0 }, 'messages');
 // will return "John has no projects."
 
-Translator.trans('name_has_x_projects', { name: 'John', projectCount: 1 }, 'messages');
+HuttoTranslate.trans('name_has_x_projects', { name: 'John', projectCount: 1 }, 'messages');
 // will return "John has 1 project."
 
-Translator.trans('name_has_x_projects', { name: 'John', projectCount: 4 }, 'messages');
+HuttoTranslate.trans('name_has_x_projects', { name: 'John', projectCount: 4 }, 'messages');
 // will return "John has 4 projects."
 ```
 
@@ -369,7 +369,7 @@ For more information, read the [Symfony documentation about ICU MessageFormat](h
 You can get the current locale by accessing the `locale` attribute:
 
 ``` javascript
-Translator.locale;
+HuttoTranslate.locale;
 // will return the current locale.
 ```
 
@@ -399,31 +399,31 @@ placeholder: "Hello %username%, how are you?"
 You can do:
 
 ``` javascript
-Translator.trans('foo');
+HuttoTranslate.trans('foo');
 // will return 'Bar'
 
-Translator.trans('foo', {}, 'Hello');
+HuttoTranslate.trans('foo', {}, 'Hello');
 // will return 'Bar'
 
-Translator.trans('ba.bar');
+HuttoTranslate.trans('ba.bar');
 // will return 'Hello world'
 
-Translator.trans('ba.bar', {}, 'Hello');
+HuttoTranslate.trans('ba.bar', {}, 'Hello');
 // will return 'Hello world'
 
-Translator.trans('placeholder', {} , 'messages');
+HuttoTranslate.trans('placeholder', {} , 'messages');
 // will return 'Hello %username%, how are you?'
 
-Translator.trans('placeholder', {} , 'Hello');
+HuttoTranslate.trans('placeholder', {} , 'Hello');
 // will return 'Hello %username%!'
 
-Translator.trans('placeholder', { "username" : "will" }, 'messages');
+HuttoTranslate.trans('placeholder', { "username" : "will" }, 'messages');
 // will return 'Hello will, how are you?'
 
-Translator.trans('placeholder', { "username" : "will" }, 'Hello');
+HuttoTranslate.trans('placeholder', { "username" : "will" }, 'Hello');
 // will return 'Hello will!'
 
-Translator.trans('placeholder', { "username" : "will" });
+HuttoTranslate.trans('placeholder', { "username" : "will" });
 // will return 'Hello will!' as the `Hello` messages have been loaded before the `messages` ones
 ```
 

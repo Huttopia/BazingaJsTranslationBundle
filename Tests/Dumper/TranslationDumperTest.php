@@ -16,7 +16,7 @@ class TranslationDumperTest extends WebTestCase
 (function (t) {
 t.fallback = 'en';
 t.defaultDomain = 'messages';
-})(Translator);
+})(HuttoTranslate);
 
 JS;
 
@@ -31,7 +31,7 @@ t.add(12, "pr\u00e9nom", "numerics", "en");
 t.add(13, "nom", "numerics", "en");
 t.add(14, "adresse", "numerics", "en");
 t.add(15, "code postal", "numerics", "en");
-})(Translator);
+})(HuttoTranslate);
 
 JS;
 
@@ -39,7 +39,7 @@ JS;
 (function (t) {
 // en
 t.add("hello", "hello", "messages", "en");
-})(Translator);
+})(HuttoTranslate);
 
 JS;
 
@@ -52,7 +52,7 @@ t.add(12, "pr\u00e9nom", "numerics", "en");
 t.add(13, "nom", "numerics", "en");
 t.add(14, "adresse", "numerics", "en");
 t.add(15, "code postal", "numerics", "en");
-})(Translator);
+})(HuttoTranslate);
 
 JS;
 
@@ -67,7 +67,7 @@ t.add(12, "pr\u00e9nom", "numerics", "fr");
 t.add(13, "nom", "numerics", "fr");
 t.add(14, "adresse", "numerics", "fr");
 t.add(15, "code postal", "numerics", "fr");
-})(Translator);
+})(HuttoTranslate);
 
 JS;
 
@@ -76,7 +76,7 @@ JS;
 // fr
 t.add("hello_name", "bonjour {name} !", "messages\u002Bintl\u002Dicu", "fr");
 t.add("hello", "bonjour", "messages", "fr");
-})(Translator);
+})(HuttoTranslate);
 
 JS;
 
@@ -89,7 +89,7 @@ t.add(12, "pr\u00e9nom", "numerics", "fr");
 t.add(13, "nom", "numerics", "fr");
 t.add(14, "adresse", "numerics", "fr");
 t.add(15, "code postal", "numerics", "fr");
-})(Translator);
+})(HuttoTranslate);
 
 JS;
 

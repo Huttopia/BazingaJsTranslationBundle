@@ -66,31 +66,31 @@ bazinga_expose_translation: ~
 bazinga_js_translation: ~
 ```
 
-* The JS `Translator` now mimics the Symfony `TranslatorInterface` and `get()`,
+* The JS `HuttoTranslate` now mimics the Symfony `TranslatorInterface` and `get()`,
   `has()` methods have since been removed. Methods `trans()` and `transChoice()`
   have been introduced:
 
 ```
 // before
-Translator.get('foo')
-Translator.get('apples', {"count" : 0}, 0);
+HuttoTranslate.get('foo')
+HuttoTranslate.get('apples', {"count" : 0}, 0);
 
 // after
-Translator.trans('foo')
-Translator.transChoice('apples', 0, {"count" : 0});
+HuttoTranslate.trans('foo')
+HuttoTranslate.transChoice('apples', 0, {"count" : 0});
 ```
 
 * Messages keys (aka ids) were prefixed by their translation domain, and you
   could get a translation by using the following `DOMAIN:id`. This is not
   possible anymore. You must pass the `DOMAIN` to the `trans()`/`transChoice()`
-  methods, or let the `Translator` find the `id` itself (hopefully).
+  methods, or let the `HuttoTranslate` find the `id` itself (hopefully).
 
 ```
 // before
-Translator.get('HELLO:foo')
+HuttoTranslate.get('HELLO:foo')
 
 // after
-Translator.trans('foo', {}, 'HELLO')
+HuttoTranslate.trans('foo', {}, 'HELLO')
 ```
 
 * The `defaultDomains` configuration parameter has been removed. This parameter
@@ -121,9 +121,9 @@ parameter:
 * The `dump` command has evolved, and now generates files into
   `web/translations`. It generates both JavaScript and JSON files, without
   configuration sections (i.e. it generates files that only add translation
-  messages to the JS `Translator`). Two special files, `config.js` and
+  messages to the JS `HuttoTranslate`). Two special files, `config.js` and
   `config.json`, are now generated and contain the configuration for the JS
-  `Translator`.
+  `HuttoTranslate`.
 
 * You should add the current application's locale into your layout, by adding
   a lang attribute to the html tag:

@@ -92,7 +92,7 @@ t.fallback = 'en';
 t.defaultDomain = 'messages';
 // en
 t.add("hello", "hello", "messages", "en");
-})(Translator);
+})(HuttoTranslate);
 
 JS
         , $response->getContent());
@@ -114,7 +114,7 @@ t.add("hello", "hello", "messages", "en");
 // fr
 t.add("hello_name", "bonjour {name} !", "messages\u002Bintl\u002Dicu", "fr");
 t.add("hello", "bonjour", "messages", "fr");
-})(Translator);
+})(HuttoTranslate);
 
 JS
         , $response->getContent());
@@ -132,7 +132,7 @@ JS
 t.fallback = 'en';
 t.defaultDomain = 'messages';
 // en
-})(Translator);
+})(HuttoTranslate);
 
 JS
         , $response->getContent());
@@ -150,7 +150,7 @@ JS
 t.fallback = 'en';
 t.defaultDomain = 'messages';
 // pt
-})(Translator);
+})(HuttoTranslate);
 
 JS
         , $response->getContent());
